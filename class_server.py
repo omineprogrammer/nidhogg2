@@ -13,15 +13,13 @@ class Server:
         self.clients = {}
 
     def mksocket(self):
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind(("", self.port))
-        sock.listen(self.maxconn)
-        return sock
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.sock.bind(("", self.port))
+        self.sock.listen(self.maxconn)
 
     def listen(self):
         temp = self.sock.accept()
-        client = {"ip": temp[1][0], "socket": temp[0]}
-        self.clients[temp[1][1]] = client
+        self.clients[temp[1][1]] = {"ip": temp[1][0], "socket": temp[0]}
 
     def addclient(self, client):
         self.clients[client[0]] = client[1]

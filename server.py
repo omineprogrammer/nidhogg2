@@ -8,7 +8,7 @@ def main():
     sock = server.mksocket()
     sw = True
     while sw:
-        server.listen(sock)
+        server.listen()
         print server.clients.keys()
 
 
