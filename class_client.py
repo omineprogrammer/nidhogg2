@@ -26,7 +26,6 @@ class Client:
 
     def send(self, message):
         self.sock.send(message)
-        return 0
 
     def startth(self, target, args = (), daemon = False):
         th = threading.Thread(target = target, args = args)

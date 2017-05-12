@@ -6,7 +6,7 @@ import class_client
 def main():
     client = class_client.Client("client.conf")
     client.connect()
-    client.send("hola")
+    client.send("<HI>")
     pass
 
 

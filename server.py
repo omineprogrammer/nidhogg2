@@ -5,11 +5,9 @@ import class_server
 
 def main():
     server = class_server.Server("server.conf")
-    sock = server.mksocket()
-    sw = True
-    while sw:
-        server.listen()
-        print server.clients.keys()
+    server.mksocket()
+    server.startth(server.listen)
+    server.startth(server.depure)
 
 
 if __name__ == '__main__':

@@ -2,6 +2,8 @@
 
 import socket
 import json
+import threading
+import time
 
 
 class Server:
@@ -17,9 +19,29 @@ class Server:
         self.sock.bind(("", self.port))
         self.sock.listen(self.maxconn)
 
-    def listen(self):
-        temp = self.sock.accept()
-        self.clients[temp[1][1]] = {"ip": temp[1][0], "socket": temp[0]}
+    def listen(self, sw = True):
+        while sw:
+            temp = self.sock.accept()
+            self.clients[temp[1][1]] = {"ip": temp[1][0], "socket": temp[0]}
 
-    def addclient(self, client):
-        self.clients[client[0]] = client[1]
+            print temp[0].recv(10240)
+            print self.clients.keys()
+
+    # def send(self, message, socket):
+    #     socket.send(message)
+
+    def depure(self, rate = 10, sw = True):
+        while sw:
+            for client in self.clients.keys():
+                try:
+                    client["socket"].send("<PING>")
+                except:
+                    del self.clients[client]
+            time.sleep(rate)
+            print self.clients
+
+    def startth(self, target, args = (), daemon = False):
+        th = threading.Thread(target = target, args = args)
+        th.setDaemon(daemon)
+        th.start()
+        return th
